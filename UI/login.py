@@ -1,15 +1,13 @@
 import customtkinter as ctk
 from copy import copy
 from PIL import Image, ImageTk
+from UI.panel import User, Admin, Supervisor
 class Login(ctk.CTk):
     def __init__(self, rootDir, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.geometry("260x180")
         self.title("Login")
-        self.rootDir = rootDir
-        im = Image.open(f'{self.rootDir}/img/lock.png')
-        photo = ImageTk.PhotoImage(im)
-        self.wm_iconphoto(True, photo)
+        self.rootDir=rootDir
         self.grid_columnconfigure(0, weight=1)
 
         self.mainFrame = ctk.CTkFrame(self, width=300, height=120)
@@ -34,4 +32,18 @@ class Login(ctk.CTk):
         self.changesFrame.columnconfigure(0, weight=1)
 
     def login_callback(self):
-        print("Hello world!")
+        role = "user"
+        
+        #TODO: uwierzytelnienie
+        if role == "user":
+            panel = User(self.rootDir)
+        elif role == "admin":
+            panel = Admin(self.rootDir)
+        elif role == "supervisor":
+            panel = Supervisor(self.rootDir)
+        else:
+            Exception("No such role")
+        self.destroy()
+        panel.mainloop()
+        
+        
