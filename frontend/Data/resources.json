@@ -1,0 +1,52 @@
+[
+    {
+        "id": 11,
+        "minSharesNeeded": 4,
+        "resourceDN": "Database Server"
+    },
+    {
+        "id": 12,
+        "minSharesNeeded": 2,
+        "resourceDN": "Web Server"
+    },
+    {
+        "id": 13,
+        "minSharesNeeded": 5,
+        "resourceDN": "Email Server"
+    },
+    {
+        "id": 14,
+        "minSharesNeeded": 3,
+        "resourceDN": "Application Server"
+    },
+    {
+        "id": 15,
+        "minSharesNeeded": 2,
+        "resourceDN": "File Server"
+    },
+    {
+        "id": 16,
+        "minSharesNeeded": 4,
+        "resourceDN": "Print Server"
+    },
+    {
+        "id": 17,
+        "minSharesNeeded": 3,
+        "resourceDN": "FTP Server"
+    },
+    {
+        "id": 18,
+        "minSharesNeeded": 5,
+        "resourceDN": "DNS Server"
+    },
+    {
+        "id": 19,
+        "minSharesNeeded": 2,
+        "resourceDN": "VPN Server"
+    },
+    {
+        "id": 20,
+        "minSharesNeeded": 4,
+        "resourceDN": "Database Server"
+    }
+]
