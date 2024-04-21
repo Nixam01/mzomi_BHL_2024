@@ -107,7 +107,7 @@ class Panel(ctk.CTk):
                 DN.grid(row=0, column=1, padx=10, pady=(10, 10))
                 VIH = ctk.CTkLabel(tempframe, text=format_hours(item["validityInHrs"]))
                 VIH.grid(row=0, column=2, padx=10, pady=(10, 10))
-                ratio = ctk.CTkLabel(tempframe, text=f"{item['resource']['sharesAmount']}/{item['resource']['minSharesNeeded']}")
+                ratio = ctk.CTkLabel(tempframe, text=f"{item['sharesAmount']}/{item['resource']['minSharesNeeded']}")
                 ratio.grid(row=0, column=3, padx=10, pady=(10, 10))
                 tempframe.columnconfigure(4, weight=1)
                 separator = tk.ttk.Separator(tempframe, orient="horizontal")
