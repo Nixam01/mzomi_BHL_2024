@@ -80,14 +80,14 @@ class Panel(ctk.CTk):
         iExpired = 1
         iDenied = 1
         for item in data:
-            if item["status"] == 'Approved' and not is_expired(item["expiryTimestamp"]):
+            if item["Status"] == 'Approved' and not is_expired(item["ExpiryTimestamp"]):
                 tempframe = ctk.CTkFrame(activeScrollableFrame, bg_color="transparent", fg_color="transparent")
                 tempframe.grid(row=2*iActive, column=0, padx=10, pady=(10, 0), sticky="ew")
                 no = ctk.CTkLabel(tempframe, text=iActive)
                 no.grid(row=0, column=0, padx=10, pady=(10, 10))
                 DN = ctk.CTkLabel(tempframe, text=item["resource"]["resourceDN"])
                 DN.grid(row=0, column=1, padx=10, pady=(10, 10))
-                timestamp = ctk.CTkLabel(tempframe, text=decode_timestamp(item["expiryTimestamp"]))
+                timestamp = ctk.CTkLabel(tempframe, text=decode_timestamp(item["ExpiryTimestamp"]))
                 timestamp.grid(row=0, column=2, padx=10, pady=(10, 10))
                 tempframe.columnconfigure(3, weight=1)
                 separator = tk.ttk.Separator(tempframe, orient="horizontal")
@@ -98,16 +98,16 @@ class Panel(ctk.CTk):
 
                 iActive = iActive + 1
 
-            elif item["status"] == 'Pending':
+            elif item["Status"] == 'Pending':
                 tempframe = ctk.CTkFrame(pendingScrollableFrame, bg_color="transparent", fg_color="transparent")
                 tempframe.grid(row=2*iPending, column=0, padx=10, pady=(10, 0), sticky="ew")
                 no = ctk.CTkLabel(tempframe, text=iPending)
                 no.grid(row=0, column=0, padx=10, pady=(10, 10))
                 DN = ctk.CTkLabel(tempframe, text=item["resource"]["resourceDN"])
                 DN.grid(row=0, column=1, padx=10, pady=(10, 10))
-                VIH = ctk.CTkLabel(tempframe, text=format_hours(item["validityInHrs"]))
+                VIH = ctk.CTkLabel(tempframe, text=format_hours(item["ValidityInHours"]))
                 VIH.grid(row=0, column=2, padx=10, pady=(10, 10))
-                ratio = ctk.CTkLabel(tempframe, text=f"{item['sharesAmount']}/{item['resource']['minSharesNeeded']}")
+                ratio = ctk.CTkLabel(tempframe, text=f"{item['sharesAmount']}/{item['resource']['MinSharesRequired']}")
                 ratio.grid(row=0, column=3, padx=10, pady=(10, 10))
                 tempframe.columnconfigure(4, weight=1)
                 separator = tk.ttk.Separator(tempframe, orient="horizontal")
@@ -120,14 +120,14 @@ class Panel(ctk.CTk):
 
                 iPending = iPending + 1
 
-            elif item["status"] == 'Approved' and is_expired(item["expiryTimestamp"]):
+            elif item["Status"] == 'Approved' and is_expired(item["ExpiryTimestamp"]):
                 tempframe = ctk.CTkFrame(expiredScrollableFrame, bg_color="transparent", fg_color="transparent")
                 tempframe.grid(row=2*iExpired, column=0, padx=10, pady=(10, 0), sticky="ew")
                 no = ctk.CTkLabel(tempframe, text=iExpired)
                 no.grid(row=0, column=0, padx=10, pady=(10, 10))
                 DN = ctk.CTkLabel(tempframe, text=item["resource"]["resourceDN"])
                 DN.grid(row=0, column=1, padx=10, pady=(10, 10))
-                timestamp = ctk.CTkLabel(tempframe, text=decode_timestamp(item["expiryTimestamp"]))
+                timestamp = ctk.CTkLabel(tempframe, text=decode_timestamp(item["ExpiryTimestamp"]))
                 timestamp.grid(row=0, column=2, padx=10, pady=(10, 10))
                 tempframe.columnconfigure(3, weight=1)
                 separator = tk.ttk.Separator(tempframe, orient="horizontal")
@@ -137,14 +137,14 @@ class Panel(ctk.CTk):
                 tempframe.grid_columnconfigure(2, weight=1, minsize=50)   # Columns for buttons and last label with no weight
 
                 iExpired = iExpired + 1
-            elif item["status"] == 'Denied':
+            elif item["Status"] == 'Denied':
                 tempframe = ctk.CTkFrame(deniedScrollableFrame, bg_color="transparent", fg_color="transparent")
                 tempframe.grid(row=2*iDenied, column=0, padx=10, pady=(10, 0), sticky="ew")
                 no = ctk.CTkLabel(tempframe, text=iDenied)
                 no.grid(row=0, column=0, padx=10, pady=(10, 10), sticky="wns")
                 DN = ctk.CTkLabel(tempframe, text=item["resource"]["resourceDN"])
                 DN.grid(row=0, column=1, padx=10, pady=(10, 10), sticky="wns")
-                VIH = ctk.CTkLabel(tempframe, text=format_hours(item["validityInHrs"]))
+                VIH = ctk.CTkLabel(tempframe, text=format_hours(item["ValidityInHours"]))
                 VIH.grid(row=0, column=2, padx=10, pady=(10, 10), sticky="wns")
                 reasoningButton = ctk.CTkButton(tempframe, width=50, height=20, text='read', command=lambda arg=item['reasoning']: show_text_in_new_window(arg))
                 reasoningButton.grid(row=0, column=3, padx=10, sticky="ens")
@@ -255,7 +255,7 @@ class Panel(ctk.CTk):
             tempframe.grid(row=2*i, column=0, padx=10, pady=(10, 0), sticky="ew")
             DN = ctk.CTkLabel(tempframe, text=item["resourceDN"])
             DN.grid(row=0, column=0, padx=10, pady=(10, 10))
-            msn = ctk.CTkLabel(tempframe, text=item["minSharesNeeded"])
+            msn = ctk.CTkLabel(tempframe, text=item["MinSharesRequired"])
             msn.grid(row=0, column=1, padx=10, pady=(10, 10))
             validityOptionMenu = ctk.CTkOptionMenu(tempframe, values=["2h", "24h", "7d", "30d", "permanent"])
             validityOptionMenu.grid(row=0, column=2, padx=10)
@@ -391,7 +391,7 @@ def decode_timestamp(timestamp):
 
 def is_expired(timestamp):
     # Parsowanie timestampu
-    dt = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+    dt = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
     # Pobranie aktualnego czasu systemowego
     current_time = datetime.now()
     
