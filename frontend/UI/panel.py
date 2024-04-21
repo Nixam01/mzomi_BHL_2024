@@ -216,6 +216,7 @@ class Panel(ctk.CTk):
             VIH.grid(row=0, column=2, padx=10, pady=(10, 10))
             reasoning = ctk.CTkLabel(tempframe, text="Reasoning")
             reasoning.grid(row=0, column=3, padx=10, pady=(10, 10))
+            
 
             tempframe.grid_columnconfigure(0, weight=0)   # Make the column with the first label expand
             tempframe.grid_columnconfigure(1, weight=1, minsize=50)   # Empty space column, no weight to keep it minimal
@@ -229,7 +230,46 @@ class Panel(ctk.CTk):
 
     def print_resources(self):
         result = ctk.CTkScrollableFrame(self)
-        
+        result.columnconfigure(0, weight=1)
+        data = self.mock_get_resources()
+        if len(data) > 0:
+            tempframe = ctk.CTkFrame(result, bg_color="transparent", fg_color="transparent")
+            tempframe.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="ew")
+            no = ctk.CTkLabel(tempframe, text="Resource name")
+            no.grid(row=0, column=0, padx=10, pady=(10, 10))
+            DN = ctk.CTkLabel(tempframe, text="Min. secrets")
+            DN.grid(row=0, column=1, padx=10, pady=(10, 10))
+            timestamp = ctk.CTkLabel(tempframe, text="Validity time")
+            timestamp.grid(row=0, column=2, padx=10, pady=(10, 10))
+            tempframe.grid_columnconfigure(0, weight=1)   # Make the column with the first label expand
+            tempframe.grid_columnconfigure(1, weight=0)   # Empty space column, no weight to keep it minimal
+            tempframe.grid_columnconfigure(2, weight=1)   # Columns for buttons and last label with no weight
+            tempframe.grid_columnconfigure(3, weight=0)
+
+            separator = tk.ttk.Separator(tempframe, orient="horizontal")
+            separator.grid(row=1, column=0, columnspan=4, sticky="ew", padx=10)
+        else: return
+        i = 1
+        for item in data:
+            tempframe = ctk.CTkFrame(result, bg_color="transparent", fg_color="transparent")
+            tempframe.grid(row=2*i, column=0, padx=10, pady=(10, 0), sticky="ew")
+            DN = ctk.CTkLabel(tempframe, text=item["resourceDN"])
+            DN.grid(row=0, column=0, padx=10, pady=(10, 10))
+            msn = ctk.CTkLabel(tempframe, text=item["minSharesNeeded"])
+            msn.grid(row=0, column=1, padx=10, pady=(10, 10))
+            validityOptionMenu = ctk.CTkOptionMenu(tempframe, values=["2h", "24h", "7d", "30d", "permanent"])
+            validityOptionMenu.grid(row=0, column=2, padx=10)
+            requestButton = ctk.CTkButton(tempframe, width=50, height=20, text='request', command=lambda arg=[to_hours(validityOptionMenu.get()), item["id"]]: request_access(arg))
+            requestButton.grid(row=0, column=3, padx=10, sticky="ens")
+            tempframe.columnconfigure(3, weight=1)
+            separator = tk.ttk.Separator(tempframe, orient="horizontal")
+            separator.grid(row=(2*i)-1, column=0, columnspan=4, sticky="ew", padx=10)
+            tempframe.grid_columnconfigure(0, weight=0)   # Make the column with the first label expand
+            tempframe.grid_columnconfigure(1, weight=1, minsize=50)   # Empty space column, no weight to keep it minimal
+            tempframe.grid_columnconfigure(2, weight=1, minsize=50)   # Columns for buttons and last label with no weight
+
+            i = i + 1
+
         return result 
 
     def print_manager(self):
@@ -239,9 +279,20 @@ class Panel(ctk.CTk):
 
     def hello_world(self):
         print("hello world!")
-        
+    
+    def request_access(self, args):
+        VIH = args[0]
+        resourceID = args[1]
+        #TODO
+
     def mock_get_browser(self):
         file_path = f"{self.rootDir}/Data/requests_browser.json"
+        with open(file_path, "r") as file:
+            data = json.load(file)
+        return data
+
+    def mock_get_resources(self):
+        file_path = f"{self.rootDir}/Data/resources.json"
         with open(file_path, "r") as file:
             data = json.load(file)
         return data
@@ -366,3 +417,15 @@ def show_text_in_new_window(text):
 
     # Uruchomienie pętli głównej dla okna
     new_window.mainloop()
+
+def to_hours(text):
+    if text == "2h":
+        return 2
+    if text == "24h":
+        return 24
+    if text == "7d":
+        return 168
+    if text == "30d":
+        return 720
+    if text == "permanent":
+        return 9999999
