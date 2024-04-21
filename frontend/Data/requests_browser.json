@@ -1,0 +1,132 @@
+[
+    {
+        "status": "Approved",
+        "id": "234567",
+        "resource": {
+            "id": 4,
+            "minSharesNeeded": 3,
+            "sharesAmount": 2,
+            "resourceDN": "Server"
+        },
+        "expiryTimestamp": "2024-04-26T08:30:00.000Z",
+        "reasoning": "Access granted by system admin",
+        "validityInHrs": 72
+    },
+    {
+        "status": "Denied",
+        "id": "345678",
+        "resource": {
+            "id": 5,
+            "minSharesNeeded": 2,
+            "sharesAmount": 1,
+            "resourceDN": "VPN"
+        },
+        "expiryTimestamp": "2024-04-28T15:45:00.000Z",
+        "reasoning": "Insufficient privileges",
+        "validityInHrs": 36
+    },
+    {
+        "status": "Pending",
+        "id": "456789",
+        "resource": {
+            "id": 6,
+            "minSharesNeeded": 4,
+            "sharesAmount": 3,
+            "resourceDN": "Email Server"
+        },
+        "expiryTimestamp": "2024-05-01T06:00:00.000Z",
+        "reasoning": "Pending approval from security team",
+        "validityInHrs": 96
+    },
+    {
+        "status": "Approved",
+        "id": "567890",
+        "resource": {
+            "id": 7,
+            "minSharesNeeded": 3,
+            "sharesAmount": 2,
+            "resourceDN": "File Storage"
+        },
+        "expiryTimestamp": "2024-05-02T14:00:00.000Z",
+        "reasoning": "Access granted for project requirements",
+        "validityInHrs": 120
+    },
+    {
+        "status": "Denied",
+        "id": "678901",
+        "resource": {
+            "id": 8,
+            "minSharesNeeded": 5,
+            "sharesAmount": 3,
+            "resourceDN": "Intranet"
+        },
+        "expiryTimestamp": "2024-05-03T18:00:00.000Z",
+        "reasoning": "Security policy violation",
+        "validityInHrs": 72
+    },
+    {
+        "status": "Pending",
+        "id": "789012",
+        "resource": {
+            "id": 9,
+            "minSharesNeeded": 4,
+            "sharesAmount": 2,
+            "resourceDN": "API Server"
+        },
+        "expiryTimestamp": "2024-05-05T22:00:00.000Z",
+        "reasoning": "Awaiting approval from IT department",
+        "validityInHrs": 144
+    },
+    {
+        "status": "Approved",
+        "id": "890123",
+        "resource": {
+            "id": 10,
+            "minSharesNeeded": 3,
+            "sharesAmount": 1,
+            "resourceDN": "Backup Server"
+        },
+        "expiryTimestamp": "2024-05-06T03:00:00.000Z",
+        "reasoning": "Access granted for emergency backup",
+        "validityInHrs": 48
+    },
+    {
+        "status": "Denied",
+        "id": "901234",
+        "resource": {
+            "id": 11,
+            "minSharesNeeded": 2,
+            "sharesAmount": 1,
+            "resourceDN": "Document Management System"
+        },
+        "expiryTimestamp": "2024-05-08T07:30:00.000Z",
+        "reasoning": "Unauthorized access attempt detected",
+        "validityInHrs": 24
+    },
+    {
+        "status": "Pending",
+        "id": "012345",
+        "resource": {
+            "id": 12,
+            "minSharesNeeded": 3,
+            "sharesAmount": 2,
+            "resourceDN": "Print Server"
+        },
+        "expiryTimestamp": "2024-05-10T11:45:00.000Z",
+        "reasoning": "Pending approval from department head",
+        "validityInHrs": 72
+    },
+    {
+        "status": "Approved",
+        "id": "987654",
+        "resource": {
+            "id": 13,
+            "minSharesNeeded": 4,
+            "sharesAmount": 3,
+            "resourceDN": "Web Server"
+        },
+        "expiryTimestamp": "2024-03-12T16:15:00.000Z",
+        "reasoning": "Access granted for web development project",
+        "validityInHrs": 96
+    }
+]
