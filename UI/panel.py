@@ -13,6 +13,7 @@ class User(ctk.CTk):
         super().__init__(*args, **kwargs)
         self.geometry(f"{600}x{450}")
         self.title(f"Panel: User")
+        self.rootDir = rootDir
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
@@ -21,18 +22,20 @@ class User(ctk.CTk):
         self.sidebarFrame.grid_columnconfigure(0, weight=1)
         self.sidebarFrame.grid_rowconfigure(4, weight=1)
 
-        self.logo_label = ctk.CTkLabel(self.sidebarFrame, text="Name", font=ctk.CTkFont(size=20, weight="bold"))
+        self.logo_label = ctk.CTkLabel(self.sidebarFrame, text="Shamir", font=ctk.CTkFont(size=20, weight="bold"))
         self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
-        self.newRequestButton = ctk.CTkButton(self.sidebarFrame, text="Request Access", command=self.hello_world)
-        self.newRequestButton.grid(row=1, column=0, padx=20, pady=10)
-        self.manageRequestsButton = ctk.CTkButton(self.sidebarFrame, text="Access browser", command=self.hello_world)
-        self.manageRequestsButton.grid(row=2, column=0, padx=20, pady=10)
-        self.logoutButton = ctk.CTkButton(self.sidebarFrame, text="Logout", command=self.hello_world)
-        self.logoutButton.grid(row=3, column=0, padx=20, pady=10, sticky="s")
+        self.browseRequestsButton = ctk.CTkButton(self.sidebarFrame, text="Access browser", command=self.access_browser_callback)
+        self.browseRequestsButton.grid(row=1, column=0, padx=20, pady=10)
+        self.newRequestButton = ctk.CTkButton(self.sidebarFrame, text="Request Access", command=self.request_access_callback)
+        self.newRequestButton.grid(row=2, column=0, padx=20, pady=10)
+        self.manageRequests = ctk.CTkButton(self.sidebarFrame, text="Manage Requests", command=self.manage_requests_callback)
+        self.manageRequests.grid(row=3, column=0, padx=20, pady=10)
+        self.logoutButton = ctk.CTkButton(self.sidebarFrame, text="Logout", command=self.logout_callback)
+        self.logoutButton.grid(row=5, column=0, padx=20, pady=10, sticky="s")
         
-        self.mainFrame = ctk.CTkFrame(self)
-        self.mainFrame.grid(row=0, column=1, sticky="nsew", padx=10, pady=(10, 10))
-        self.mainFrame.grid_columnconfigure(0, weight=1)
+        accessBrowser = self.print_access_browser()
+        accessBrowser.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
+        self.mainloop()
         # self.top_frame = ctk.CTkFrame(self, height=40)
         # self.top_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="new")
         # self.searchText = ctk.StringVar()
@@ -53,8 +56,65 @@ class User(ctk.CTk):
         # self.edit_buttons = {}
         # self.delete_buttons = {}
         # self.print_list()
+
+    def access_browser_callback(self):
+        obj = self.print_access_browser()
+        obj.grid(row=0, column=1, sticky="nwse")
+
+    def request_access_callback(self):
+        obj = self.print_resources()
+        obj.grid(row=0, column=1, sticky="nwse")
+
+    def manage_requests_callback(self):
+        obj = self.print_manager()
+        obj.grid(row=0, column=1, sticky="nwse")
+
+    def print_access_browser(self):
+        result = ctk.CTkTabview(self)
+        result.add("Active")
+        result.add("Pending")
+        result.add("Expired")
+        result.add("Denied")
+        activeScrollableFrame = ctk.CTkScrollableFrame(result.tab("Active"), bg_color="transparent", fg_color="transparent")
+        pendingScrollableFrame = ctk.CTkScrollableFrame(result.tab("Pending"), bg_color="transparent", fg_color="transparent")
+        expiredScrollableFrame = ctk.CTkScrollableFrame(result.tab("Expired"), bg_color="transparent", fg_color="transparent")
+        deniedScrollableFrame = ctk.CTkScrollableFrame(result.tab("Denied"), bg_color="transparent", fg_color="transparent")
+        activeScrollableFrame.grid(row=0, column=0, sticky="nwse")
+        pendingScrollableFrame.grid(row=0, column=0, sticky="nwse")
+        expiredScrollableFrame.grid(row=0, column=0, sticky="nwse")
+        deniedScrollableFrame.grid(row=0, column=0, sticky="nwse")
+        result.tab("Active").grid_columnconfigure(0, weight=1)
+        result.tab("Active").grid_rowconfigure(0, weight=1)
+        result.tab("Pending").grid_columnconfigure(0, weight=1)
+        result.tab("Pending").grid_rowconfigure(0, weight=1)
+        result.tab("Expired").grid_columnconfigure(0, weight=1)
+        result.tab("Expired").grid_rowconfigure(0, weight=1)
+        result.tab("Denied").grid_columnconfigure(0, weight=1)
+        result.tab("Denied").grid_rowconfigure(0, weight=1)
+        
+
+
+        return result
+    
+    def print_resources(self):
+        result = ctk.CTkScrollableFrame(self)
+        
+        return result 
+
+    def print_manager(self):
+        result = ctk.CTkScrollableFrame(self)
+
+        return result
+
     def hello_world(self):
         print("hello world!")
+
+
+    def logout_callback(self):
+        from UI.login import Login
+        self.destroy()
+        login = Login(self.rootDir)
+        login.mainloop()
 
     def print_list(self):
         for widget in self.grid_slaves():
